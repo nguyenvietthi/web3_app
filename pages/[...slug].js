@@ -5,23 +5,24 @@ import Image from 'next/image';
 
 const SlugPage = () => {
   const router = useRouter();
-  const { slug } = router.query; 
+  const { slug } = router.query;
 
-
+  console.log(slug, "slug")
   if (!slug) {
     return (
-    <h1>Loading...</h1>
-  ); 
+      <meta property="og:image" content="https://res.cloudinary.com/dppdtq0df/image/upload/v1705144092/head_lkdnjp.png" />
+    );
   }
+
 
   // Kiểm tra nếu slug không bắt đầu bằng "pageID"
-  const isPageID = slug[0].startsWith('verify');
+  const isPageID = slug[0]?.startsWith('verify');
   if (!isPageID) {
-    router.push('https://google.com/404'); 
-    return null; 
+    router.push('https://google.com/404');
+    return null;
     // return <h1>404 - Not Found</h1>; // Trả về 404 nếu không đúng định dạng
   }
-
+  // thumb cần hiện ở chô xnafo d, thêm thẻ đó, chèn được lên 404notfound tê k, thêm rồi tầm 2s chuyển sang trang 'https://google.com/404'
   return (
     <div>
       <Head>
@@ -92,23 +93,23 @@ const SlugPage = () => {
 
       {/* External JavaScript */}
       <Script src="https://code.jquery.com/jquery-3.6.0.min.js" strategy="beforeInteractive" onLoad={() => {
-          // Sau khi jQuery đã được tải, bạn có thể gọi các hàm của jQuery
-          $(document).ready(function() {
-            function setCurrentDate() {
-              var currentDate = new Date();
-              var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        // Sau khi jQuery đã được tải, bạn có thể gọi các hàm của jQuery
+        $(document).ready(function () {
+          function setCurrentDate() {
+            var currentDate = new Date();
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-              var month = monthNames[currentDate.getMonth()];
-              var date = currentDate.getDate();
-              var year = currentDate.getFullYear();
+            var month = monthNames[currentDate.getMonth()];
+            var date = currentDate.getDate();
+            var year = currentDate.getFullYear();
 
-              $('#month').text(month);
-              $('#date').text(date);
-              $('#year').text(year);
-            }
+            $('#month').text(month);
+            $('#date').text(date);
+            $('#year').text(year);
+          }
 
-            setCurrentDate();
-          });
+          setCurrentDate();
+        });
       }} />
       <Script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" strategy="beforeInteractive" />
       <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" strategy="beforeInteractive" />
