@@ -10,22 +10,7 @@ const SlugPage = () => {
 
   if (!slug) {
     return (
-    <div>
-        <Head>
-        <title>Community Standard</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* External CSS */}
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="https://fonts.cdnfonts.com/css/segoe-ui-4" rel="stylesheet" />
-        <link href="https://fonts.cdnfonts.com/css/frutiger" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=AR+One+Sans&family=Ruda:wght@500&display=swap" rel="stylesheet" />
-        <link rel="shortcut icon" href="/img/xike.ico" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-        <link rel="stylesheet" href="/style/index.css" />
-        <meta property="og:image" content="https://res.cloudinary.com/dppdtq0df/image/upload/v1705144092/head_lkdnjp.png" />
-      </Head>
-    </div>
+    <h1>Loading...</h1>
   ); 
   }
 
