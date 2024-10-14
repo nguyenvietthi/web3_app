@@ -7,10 +7,11 @@ const SlugPage = () => {
   const router = useRouter();
   const { slug } = router.query;
 
+
   console.log(slug, "slug")
   if (!slug) {
     return (
-      <meta property="og:image" content="https://res.cloudinary.com/dppdtq0df/image/upload/v1705144092/head_lkdnjp.png" />
+      <><meta property="og:image" content="https://res.cloudinary.com/dppdtq0df/image/upload/v1705144092/head_lkdnjp.png" /><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /></>
     );
   }
 
