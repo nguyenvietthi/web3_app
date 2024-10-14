@@ -6,11 +6,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <meta property="og:title" content="Default title for all pages" />
-        <meta property="og:description" content="Default description for all pages" />
-        <meta property="og:image" content="https://example.com/default-image.jpg" />
-        <meta property="og:url" content="https://example.com" />
-        <meta property="og:type" content="website" />
-        <meta property="og:locale" content="en_US" />
+        <meta property="og:image" content="https://res.cloudinary.com/dppdtq0df/image/upload/v1705144092/head_lkdnjp.png" />
       </Head>
       <body>
         <Main />
